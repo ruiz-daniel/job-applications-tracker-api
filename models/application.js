@@ -7,7 +7,7 @@ const applicationSchema = new Schema({
   company: { type: String, required: true },
   country: String,
   reqExperience: Number,
-  stack: [String],
+  reqSkills: [String],
   processPhase: String,
   visa: { type: Boolean, default: false },
   relocation: { type: Boolean, default: false },
@@ -15,6 +15,7 @@ const applicationSchema = new Schema({
   dateApplied: { type: Date, default: Date() },
   datePosted: Date,
   link: String,
+  labels: [String],
   user: { type: Schema.Types.ObjectId, ref: 'user', required: true }
 })
 
