@@ -2,10 +2,11 @@ const express = require('express');
 require('dotenv').config({ path: './.env' })
 const cors = require('cors')
 const app = express();
-const PORT = 3002;
+const PORT = 3003;
 const createError = require('http-errors')
 
 const usersRouter = require('./routes/users')
+const applicationsRouter = require('./routes/applications')
 
 
   
@@ -22,6 +23,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 app.use('/users', usersRouter)
+app.use('/applications', applicationsRouter)
 
 
 
