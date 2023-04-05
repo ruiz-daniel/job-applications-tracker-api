@@ -42,7 +42,7 @@ exports.update = async (req, res, next) => {
 
 exports.delete = async (req, res, next) => {
   const response = await applicationService.handler
-    .delete(req.params.id)
+    .delete(req.params.id, req.user)
     .catch((error) => {
       res.status(400)
       return error.message

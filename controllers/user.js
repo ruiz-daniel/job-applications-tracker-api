@@ -36,19 +36,35 @@ exports.login = async (req, res, next) => {
 }
 
 exports.update = async (req, res, next) => {
-  const response = await userService.handler.update(req.body).catch((error) => {
-    res.status(400)
-    return error.message
-  })
-  res.send(response)
+  if (req.body._id === req.user._id || req.user.admin) {
+    if (!req.user.admin && req.body.admin) {
+      res.status(403)
+      res.send("Can't make a user an admin without permission")
+    }
+    const response = await userService.handler
+      .update(req.body)
+      .catch((error) => {
+        res.status(400)
+        return error.message
+      })
+    res.send(response)
+  } else {
+    res.status(401)
+    res.send("Can't change someone else's user")
+  }
 }
 
 exports.delete = async (req, res, next) => {
-  const response = await userService.handler
-    .delete(req.params.id)
-    .catch((error) => {
-      res.status(400)
-      return error.message
-    })
-  res.send(response)
+  if (req.body._id === req.user.id || req.body.user.admin) {
+    const response = await userService.handler
+      .delete(req.params.id)
+      .catch((error) => {
+        res.status(400)
+        return error.message
+      })
+    res.send(response)
+  } else {
+    res.status(401)
+    res.send("Can't delete someone else's user")
+  }
 }

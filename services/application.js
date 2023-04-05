@@ -38,9 +38,9 @@ module.exports.handler = {
     }
     return result
   },
-  async delete(id) {
+  async delete(id, tokenUser) {
     let result = await applicationModel
-      .deleteOne({ _id: id })
+      .deleteOne({ _id: id, user: tokenUser._id })
       .catch((error) => {
         throw new Error('Job Application not found')
       })
